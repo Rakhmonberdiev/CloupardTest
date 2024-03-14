@@ -49,7 +49,7 @@ namespace API.Controllers
                 response.ErrorMessage = new List<string> { ex.ToString() };
             }
             return response;
-            
+
         }
 
         [HttpGet("{id:guid}", Name = "GetProduct")]
@@ -60,7 +60,7 @@ namespace API.Controllers
             try
             {
                 var prodcut = await repository.GetAsync(v => v.Id == id);
-                if(prodcut == null)
+                if (prodcut == null)
                 {
                     response.StatusCode = HttpStatusCode.NotFound;
                     return NotFound(response);
@@ -69,7 +69,7 @@ namespace API.Controllers
                 response.StatusCode = HttpStatusCode.OK;
                 return Ok(response);
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 response.IsSuccess = false;
                 response.ErrorMessage = new List<string> { ex.ToString() };
@@ -94,6 +94,31 @@ namespace API.Controllers
                 response.Result = mapper.Map<ProductDto>(model);
                 response.StatusCode = HttpStatusCode.Created;
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.ErrorMessage = new List<string> { ex.ToString() };
+            }
+            return response;
+        }
+
+
+        [HttpPut("{id:guid}", Name ="UpdateProduct")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<APIResponse>> Update(Guid id, [FromBody] ProductUpdateDto productUpdateDto)
+        {
+            try
+            {
+                if (productUpdateDto == null || id != productUpdateDto.Id)
+                {
+                    return BadRequest();
+                }
+                Product model = mapper.Map<Product>(productUpdateDto);
+                await repository.UpdateAsync(model);
+                response.StatusCode = HttpStatusCode.NoContent;
+                return Ok(response);
             }
             catch (Exception ex)
             {

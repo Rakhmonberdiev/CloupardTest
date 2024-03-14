@@ -6,7 +6,7 @@ namespace API.Repositories.Interface
     {
         Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter=null);
         Task<T> GetAsync(Expression<Func<T, bool>> filter);
-        Task Update(T entity);
+        Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
         Task CreateAsync(T entity);
         Task SaveAsync();
