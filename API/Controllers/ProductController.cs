@@ -52,6 +52,31 @@ namespace API.Controllers
             
         }
 
+        [HttpGet("{id:guid}", Name = "GetProduct")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<APIResponse>> GetProduct(Guid id)
+        {
+            try
+            {
+                var prodcut = await repository.GetAsync(v => v.Id == id);
+                if(prodcut == null)
+                {
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    return NotFound(response);
+                }
+                response.Result = mapper.Map<ProductDto>(prodcut);
+                response.StatusCode = HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch(Exception ex) 
+            {
+                response.IsSuccess = false;
+                response.ErrorMessage = new List<string> { ex.ToString() };
+            }
+            return response;
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
