@@ -104,7 +104,7 @@ namespace API.Controllers
         }
 
 
-        [HttpPut("{id:guid}", Name ="UpdateProduct")]
+        [HttpPut("{id:guid}", Name = "UpdateProduct")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<APIResponse>> Update(Guid id, [FromBody] ProductUpdateDto productUpdateDto)
@@ -126,6 +126,30 @@ namespace API.Controllers
                 response.ErrorMessage = new List<string> { ex.ToString() };
             }
             return response;
+        }
+        [HttpDelete("{id:guid}", Name = "DeleteProduct")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<APIResponse>> Delete(Guid id)
+        {
+            try
+            {
+                var product = await repository.GetAsync(u => u.Id == id);
+                if (product == null)
+                {
+                    return NotFound();
+                }
+                await repository.DeleteAsync(product);
+                response.StatusCode = HttpStatusCode.NoContent;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.ErrorMessage = new List<string> { ex.ToString() };
+            }
+            return response;
+
         }
     }
 }
