@@ -25,6 +25,32 @@ namespace API.Controllers
             this.mapper = mapper;
             response = new();
         }
+        [HttpGet]
+        public async Task<ActionResult<APIResponse>> GetAll(string? filter)
+        {
+            try
+            {
+                logger.Log("Getting all products", "");
+                IEnumerable<Product> productList;
+                if (string.IsNullOrEmpty(filter))
+                {
+                    productList = await repository.GetAllAsync();
+                }
+                else
+                {
+                    productList = await repository.GetAllAsync(v => v.Name.Contains(filter));
+                }
+                response.Result = mapper.Map<List<ProductDto>>(productList);
+                response.StatusCode = HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.ErrorMessage = new List<string> { ex.ToString() };
+            }
+            return response;
+            
+        }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
