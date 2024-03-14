@@ -1,5 +1,6 @@
 using API.Data;
 using API.Logging;
+using API.Mapping;
 using API.Repositories.Implementation;
 using API.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,17 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("Test"));
 });
+builder.Services.AddAutoMapper(typeof(MappingConfig));
+
+
+
+
+
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+
+
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
