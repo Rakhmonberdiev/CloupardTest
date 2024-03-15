@@ -8,16 +8,20 @@
         </div>
         <div class="modal-body">
             <form asp-action="Edit" data-ajax="true" data-ajax-method="POST" data-ajax-complete="refreshData">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <input hidden asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" disabled class="form-control" />
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Description" disabled class="control-label"></label>
+                    <label asp-for="Description" class="control-label"></label>
                     <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
