@@ -3,42 +3,55 @@
     ViewData["Title"] = "Index";
 }
 <a asp-controller="Product" asp-action="ProductCreate" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct">
-   Добавить
+    Добавить
 </a>
 <br />
 <br />
-@using(Html.BeginForm("Index", "Product", FormMethod.Get))
+@using (Html.BeginForm("Index", "Product", FormMethod.Get))
 {
     <div class="input-group">
-        @Html.TextBox("filter", null, new { @class = "form-control" })
+        <input type="text" name="filter" class="form-control" />
         <div class="input-group-append">
             <button type="submit" class="btn btn-outline-primary">Фильтр</button>
         </div>
     </div>
 }
 <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Ид</th>
-                <th scope="col">Название</th>
-                <th scope="col">Описание</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach(var productItem in Model)
+    <thead>
+        <tr>
+            <th scope="col">Ид</th>
+            <th scope="col">Название</th>
+            <th scope="col">Описание</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var productItem in Model)
         {
             <tr>
-                <th scope="row">@Html.DisplayFor(product => productItem.Id)</th>
-                <td>@Html.DisplayFor(product => productItem.Name)</td>
-                <td>@Html.DisplayFor(product => productItem.Description)</td>
+                <th scope="row">@productItem.Id</th>
+                <td>@productItem.Name</td>
+                <td>@productItem.Description</td>
+                <td>
+                    <div class="modal fade" id="editModal-@productItem.Id" tabindex="-1" role="dialog" aria-labelledby="editModal-@productItem.Id-label" aria-hidden="true">
+                        <partial name="_Edit" model="productItem" />
+                    </div>
+                    <div class="btn-group">
+                        <a asp-controller="Product" asp-action="Edit" data-bs-toggle="modal" data-bs-target="#editModal-@productItem.Id" class="btn btn-outline-primary">Ред.</a>
+                        <a asp-controller="Product" asp-action="Delete" asp-route-Id="@productItem.Id" class="btn btn-outline-danger">Уд.</a>
+                    </div>
+                </td>
             </tr>
+        
         }
 
-        </tbody>
-    </table>
+    </tbody>
+</table>
 
-    @await Html.PartialAsync("ProductCreate", new ProductCreateDto())
+@await Html.PartialAsync("ProductCreate", new ProductCreateDto())
+
 @section Scripts {
+
+
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

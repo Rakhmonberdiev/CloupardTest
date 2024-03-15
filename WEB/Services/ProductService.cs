@@ -53,13 +53,13 @@ namespace WEB.Services
             });
         }
 
-        public Task<T> UpdateAsync<T>(ProductUpdateDto dto)
+        public Task<T> UpdateAsync<T>(ProductDto dto)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = ApiTypeEnum.ApiType.PUT,
                 Data = dto,
-                Url = apiUrl + "/api/Product" + dto.Id
+                Url = apiUrl + "/api/Product/" + dto.Id
             });
         }
     }
