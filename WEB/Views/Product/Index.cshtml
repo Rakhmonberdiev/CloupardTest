@@ -1,9 +1,12 @@
-﻿@model IEnumerable<WEB.Models.DTOs.ProductDto>
+﻿@model IEnumerable<ProductDto>
 @{
     ViewData["Title"] = "Index";
 }
-
-
+<a asp-controller="Product" asp-action="ProductCreate" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct">
+   Добавить
+</a>
+<br />
+<br />
 @using(Html.BeginForm("Index", "Product", FormMethod.Get))
 {
     <div class="input-group">
@@ -33,3 +36,10 @@
 
         </tbody>
     </table>
+
+    @await Html.PartialAsync("ProductCreate", new ProductCreateDto())
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

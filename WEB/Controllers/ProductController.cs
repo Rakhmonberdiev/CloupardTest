@@ -23,5 +23,24 @@ namespace WEB.Controllers
             }
             return View(products);
         }
+
+        public  IActionResult ProductCreate()
+        {
+      
+            return PartialView("ProductCreate");
+        }
+        [HttpPost]
+        public async Task<IActionResult> ProductCreate(ProductCreateDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                var rs = await productService.CreateAsync<APIResponse>(model);
+                if (rs != null && rs.IsSuccess)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            return PartialView("ProductCreate", model);
+        }
     }
 }

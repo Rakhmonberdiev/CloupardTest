@@ -93,7 +93,7 @@ namespace API.Controllers
                 await repository.CreateAsync(model);
                 response.Result = mapper.Map<ProductDto>(model);
                 response.StatusCode = HttpStatusCode.Created;
-                return Ok();
+                return Ok(response);
             }
             catch (Exception ex)
             {
