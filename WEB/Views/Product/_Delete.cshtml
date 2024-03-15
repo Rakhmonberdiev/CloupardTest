@@ -3,25 +3,27 @@
 <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h1 class="modal-title fs-5" id="addProductLabel">Редактирование</h1>
+            <h1 class="modal-title fs-5">Удаление</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form asp-action="Edit" data-ajax="true" data-ajax-method="POST" data-ajax-complete="refreshData">
+            <form asp-action="Delete" data-ajax="true" data-ajax-method="POST" data-ajax-complete="refreshData">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <input hidden asp-for="Id" class="form-control" />
+     
                 </div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
                     <input asp-for="Name" disabled class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label asp-for="Description" disabled class="control-label"></label>
-                    <input asp-for="Description" class="form-control" />
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" disabled class="form-control" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                    <button type="submit" class="btn btn-outline-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-outline-danger">Удалить</button>
                 </div>
             </form>
         </div>

@@ -40,16 +40,6 @@ namespace WEB.Controllers
             }
             return PartialView("ProductCreate", model);
         }
-        public async Task<IActionResult> Edit(Guid Id)
-        {
-            var rs = await productService.GetAsync<APIResponse>(Id);
-            if(rs != null && rs.IsSuccess)
-            {
-                ProductDto model = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(rs.Result));
-                return View(model);
-            }
-            return NotFound();
-        }
         [HttpPost]
         public async Task<IActionResult> Edit(ProductDto model)
         {
@@ -62,6 +52,16 @@ namespace WEB.Controllers
                 }
             }
             return PartialView("_Edit", model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(ProductDto model)
+        {
+            var rs = await productService.DeleteAsync<APIResponse>(model.Id);
+            if(rs != null && rs.IsSuccess)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
         }
         
     }

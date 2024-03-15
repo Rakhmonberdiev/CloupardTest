@@ -35,9 +35,12 @@
                     <div class="modal fade" id="editModal-@productItem.Id" tabindex="-1" role="dialog" aria-labelledby="editModal-@productItem.Id-label" aria-hidden="true">
                         <partial name="_Edit" model="productItem" />
                     </div>
+                    <div class="modal fade" id="deleteModal-@productItem.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModal-@productItem.Id-label" aria-hidden="true">
+                        <partial name="_Delete" model="productItem" />
+                    </div>
                     <div class="btn-group">
                         <a asp-controller="Product" asp-action="Edit" data-bs-toggle="modal" data-bs-target="#editModal-@productItem.Id" class="btn btn-outline-primary">Ред.</a>
-                        <a asp-controller="Product" asp-action="Delete" asp-route-Id="@productItem.Id" class="btn btn-outline-danger">Уд.</a>
+                        <a asp-controller="Product" asp-action="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal-@productItem.Id" class="btn btn-outline-danger">Уд.</a>
                     </div>
                 </td>
             </tr>
