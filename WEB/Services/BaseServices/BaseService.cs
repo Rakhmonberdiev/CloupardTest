@@ -2,7 +2,7 @@
 using System.Text;
 using WEB.Utilities;
 
-namespace WEB.Services.BaseService
+namespace WEB.Services.BaseServices
 {
     public class BaseService : IBaseService
     {
