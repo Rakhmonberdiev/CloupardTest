@@ -11,7 +11,7 @@ namespace WEB.Services
         public ProductService(IHttpClientFactory httpClient, IConfiguration configuration) : base(httpClient)
         {
             _httpClient = httpClient;
-
+            apiUrl = configuration.GetValue<string>("ServiceUrls:API");
         }
 
         public Task<T> GetAllAsync<T>(string filter)

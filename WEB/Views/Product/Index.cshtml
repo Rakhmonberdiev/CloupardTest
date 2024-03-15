@@ -1,0 +1,35 @@
+﻿@model IEnumerable<WEB.Models.DTOs.ProductDto>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+@using(Html.BeginForm("Index", "Product", FormMethod.Get))
+{
+    <div class="input-group">
+        @Html.TextBox("filter", null, new { @class = "form-control" })
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-outline-primary">Фильтр</button>
+        </div>
+    </div>
+}
+<table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Ид</th>
+                <th scope="col">Название</th>
+                <th scope="col">Описание</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach(var productItem in Model)
+        {
+            <tr>
+                <th scope="row">@Html.DisplayFor(product => productItem.Id)</th>
+                <td>@Html.DisplayFor(product => productItem.Name)</td>
+                <td>@Html.DisplayFor(product => productItem.Description)</td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
