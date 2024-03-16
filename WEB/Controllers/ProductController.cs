@@ -38,7 +38,7 @@ namespace WEB.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            return PartialView("ProductCreate");
+            return BadRequest();
         }
         [HttpPost]
         public async Task<IActionResult> Edit(ProductDto model)
@@ -51,7 +51,7 @@ namespace WEB.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            return PartialView("_Edit");
+            return BadRequest();
         }
         [HttpPost]
         public async Task<IActionResult> Delete(ProductDto model)
@@ -61,7 +61,7 @@ namespace WEB.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-            return PartialView("_Delete");
+            return BadRequest();  
         }
         
     }
