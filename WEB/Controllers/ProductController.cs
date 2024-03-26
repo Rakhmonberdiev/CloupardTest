@@ -54,9 +54,9 @@ namespace WEB.Controllers
             return BadRequest();
         }
         [HttpPost]
-        public async Task<IActionResult> Delete(ProductDto model)
+        public async Task<IActionResult> Delete(Guid Id)
         {
-            var rs = await productService.DeleteAsync<APIResponse>(model.Id);
+            var rs = await productService.DeleteAsync<APIResponse>(Id);
             if(rs != null && rs.IsSuccess)
             {
                 return RedirectToAction(nameof(Index));
