@@ -107,11 +107,11 @@ namespace API.Controllers
         [HttpPut("{id:guid}", Name = "UpdateProduct")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<APIResponse>> Update(Guid id, [FromBody] ProductUpdateDto productUpdateDto)
+        public async Task<ActionResult<APIResponse>> Update([FromBody] ProductUpdateDto productUpdateDto)
         {
             try
             {
-                if (productUpdateDto == null || id != productUpdateDto.Id)
+                if (productUpdateDto == null)
                 {
                     return BadRequest();
                 }
