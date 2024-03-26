@@ -1,6 +1,7 @@
 using API.Data;
 using API.Logging;
 using API.Mapping;
+using API.Middleware;
 using API.Repositories.Implementation;
 using API.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
+app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
