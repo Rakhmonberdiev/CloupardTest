@@ -15,9 +15,9 @@ namespace WEB.Services
             apiUrl = configuration.GetValue<string>("ServiceUrls:API");
         }
 
-        public Task<T> CreateAsync<T>(ProductCreateDto dto)
+        public Task<APIResponse> CreateAsync(ProductCreateDto dto)
         {
-            return SendAsync<T>(new APIRequest()
+            return SendAsync<APIResponse>(new APIRequest()
             {
                 ApiType = ApiTypeEnum.ApiType.POST,
                 Data = dto,
@@ -26,36 +26,36 @@ namespace WEB.Services
 
         }
 
-        public Task<T> DeleteAsync<T>(Guid id)
+        public Task<APIResponse> DeleteAsync(Guid id)
         {
-            return SendAsync<T>(new APIRequest()
+            return SendAsync<APIResponse>(new APIRequest()
             {
                 ApiType = ApiTypeEnum.ApiType.DELETE,
                 Url = apiUrl + "/api/Product/" + id
             });
         }
 
-        public Task<T> GetAllAsync<T>(string filter)
+        public Task<APIResponse> GetAllAsync(string filter)
         {
-            return SendAsync<T>(new APIRequest()
+            return SendAsync<APIResponse>(new APIRequest()
             {
                 ApiType = ApiTypeEnum.ApiType.GET,
                 Url = apiUrl + "/api/Product/?filter=" + filter
             });
         }
 
-        public Task<T> GetAsync<T>(Guid id)
+        public Task<APIResponse> GetAsync(Guid id)
         {
-            return SendAsync<T>(new APIRequest()
+            return SendAsync<APIResponse>(new APIRequest()
             {
                 ApiType = ApiTypeEnum.ApiType.GET,
                 Url = apiUrl + "/api/Product/" + id
             });
         }
 
-        public Task<T> UpdateAsync<T>(ProductDto dto)
+        public Task<APIResponse> UpdateAsync(ProductDto dto)
         {
-            return SendAsync<T>(new APIRequest()
+            return SendAsync<APIResponse>(new APIRequest()
             {
                 ApiType = ApiTypeEnum.ApiType.PUT,
                 Data = dto,

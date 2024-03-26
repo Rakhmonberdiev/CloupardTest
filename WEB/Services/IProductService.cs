@@ -1,13 +1,14 @@
 ﻿using WEB.Models.DTOs;
+using WEB.Utilities;
 
 namespace WEB.Services
 {
     public interface IProductService
     {
-        Task<T> GetAsync<T>(Guid id);
-        Task<T> GetAllAsync<T>(string filter);
-        Task<T> CreateAsync<T>(ProductCreateDto dto);
-        Task<T> UpdateAsync<T>(ProductDto dto);
-        Task<T> DeleteAsync<T>(Guid id);
+        Task<APIResponse> GetAsync(Guid id);
+        Task<APIResponse> GetAllAsync(string filter);
+        Task<APIResponse> CreateAsync(ProductCreateDto dto);
+        Task<APIResponse> UpdateAsync(ProductDto dto);
+        Task<APIResponse> DeleteAsync(Guid id);
     }
 }

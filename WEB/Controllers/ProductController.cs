@@ -19,7 +19,7 @@ namespace WEB.Controllers
         public async Task<IActionResult> Index(string filter)
         {
             List<ProductDto> products = new();
-            var rs = await productService.GetAllAsync<APIResponse>(filter);
+            var rs = await productService.GetAllAsync(filter);
             if (rs != null && rs.IsSuccess)
             {
                 products = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(rs.Result));
@@ -32,7 +32,7 @@ namespace WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                var rs = await productService.CreateAsync<APIResponse>(model);
+                var rs = await productService.CreateAsync(model);
                 if (rs != null && rs.IsSuccess)
                 {
                     return RedirectToAction(nameof(Index));
@@ -45,7 +45,7 @@ namespace WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                var rs = await productService.UpdateAsync<APIResponse>(model);
+                var rs = await productService.UpdateAsync(model);
                 if(rs != null && rs.IsSuccess)
                 {
                     return RedirectToAction(nameof(Index));
@@ -56,7 +56,7 @@ namespace WEB.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(Guid Id)
         {
-            var rs = await productService.DeleteAsync<APIResponse>(Id);
+            var rs = await productService.DeleteAsync(Id);
             if(rs != null && rs.IsSuccess)
             {
                 return RedirectToAction(nameof(Index));
