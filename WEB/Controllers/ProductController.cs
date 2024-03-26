@@ -63,6 +63,15 @@ namespace WEB.Controllers
             }
             return BadRequest();  
         }
-        
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var product = await productService.GetAsync(id);
+            if (product != null && product.IsSuccess)
+            {
+                var productDto = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(product.Result));
+                return PartialView("_Edit", productDto);
+            }
+            return BadRequest();
+        }
     }
 }
