@@ -18,13 +18,12 @@ namespace WEB.Controllers
         }
         public async Task<IActionResult> Index(string filter)
         {
-            List<ProductDto> products = new();
-            var rs = await productService.GetAllAsync(filter);
-            if (rs != null && rs.IsSuccess)
+            var products = await productService.GetAllAsync(filter);
+            if (products != null)
             {
-                products = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(rs.Result));
+                return View(products);
             }
-            return View(products);
+            return BadRequest();
         }
 
         [HttpPost]
@@ -33,7 +32,7 @@ namespace WEB.Controllers
             if (ModelState.IsValid)
             {
                 var rs = await productService.CreateAsync(model);
-                if (rs != null && rs.IsSuccess)
+                if (rs != null)
                 {
                     return RedirectToAction(nameof(Index));
                 }
@@ -46,7 +45,7 @@ namespace WEB.Controllers
             if (ModelState.IsValid)
             {
                 var rs = await productService.UpdateAsync(model);
-                if(rs != null && rs.IsSuccess)
+                if(rs != null)
                 {
                     return RedirectToAction(nameof(Index));
                 }
@@ -57,7 +56,7 @@ namespace WEB.Controllers
         public async Task<IActionResult> Delete(Guid Id)
         {
             var rs = await productService.DeleteAsync(Id);
-            if(rs != null && rs.IsSuccess)
+            if(rs != null)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -66,10 +65,9 @@ namespace WEB.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             var product = await productService.GetAsync(id);
-            if (product != null && product.IsSuccess)
+            if (product != null)
             {
-                var productDto = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(product.Result));
-                return PartialView("_Edit", productDto);
+                return PartialView("_Edit", product);
             }
             return BadRequest();
         }

@@ -1,4 +1,5 @@
 ﻿
+using Newtonsoft.Json;
 using WEB.Models.DTOs;
 using WEB.Services.BaseServices;
 using WEB.Utilities;
@@ -35,22 +36,36 @@ namespace WEB.Services
             });
         }
 
-        public Task<APIResponse> GetAllAsync(string filter)
+        public async Task<List<ProductDto>> GetAllAsync(string filter)
         {
-            return SendAsync<APIResponse>(new APIRequest()
+ 
+            var response = await SendAsync<APIResponse>(new APIRequest()
             {
                 ApiType = ApiTypeEnum.ApiType.GET,
                 Url = apiUrl + "/api/Product/?filter=" + filter
             });
+            if (response != null && response.IsSuccess)
+            {
+                var products = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
+                return products;
+            }
+
+            return null;
         }
 
-        public Task<APIResponse> GetAsync(Guid id)
+        public async Task<ProductDto> GetAsync(Guid id)
         {
-            return SendAsync<APIResponse>(new APIRequest()
+            var response = await SendAsync<APIResponse>(new APIRequest()
             {
                 ApiType = ApiTypeEnum.ApiType.GET,
                 Url = apiUrl + "/api/Product/" + id
             });
+            if (response != null && response.IsSuccess)
+            {
+                var productDto = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
+                return productDto;
+            }
+            return null;
         }
 
         public Task<APIResponse> UpdateAsync(ProductDto dto)
