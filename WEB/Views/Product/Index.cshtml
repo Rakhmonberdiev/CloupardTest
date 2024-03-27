@@ -32,14 +32,24 @@
                 <td>@productItem.Name</td>
                 <td>@productItem.Description</td>
                 <td>
-                    <div class="modal fade" id="editModal-@productItem.Id" tabindex="-1" role="dialog" aria-labelledby="editModal-@productItem.Id-label" aria-hidden="true">
-                        <partial name="_Edit" model="productItem" />
+                    <div class="modal fade" role="dialog" id="myModal" aria-labelledby="myModal-label" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Редактирование</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" id="myModal">
+                                <partial name="_Edit" model="productItem" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal fade" id="deleteModal-@productItem.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModal-@productItem.Id-label" aria-hidden="true">
                         <partial name="_Delete" model="productItem" />
                     </div>
                     <div class="btn-group">
-                        <a asp-controller="Product" asp-action="Edit" data-bs-toggle="modal" data-bs-target="#editModal-@productItem.Id" class="btn btn-outline-primary">Ред.</a>
+                        <a data-bs-toggle="modal" onclick="getProductById('@productItem.Id')" class="btn btn-outline-primary">Ред.</a>
                         <a asp-controller="Product" asp-action="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal-@productItem.Id" class="btn btn-outline-danger">Уд.</a>
                     </div>
                 </td>
@@ -52,10 +62,7 @@
 
 @await Html.PartialAsync("ProductCreate", new ProductCreateDto())
 
-@section Scripts {
-
-
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
 }

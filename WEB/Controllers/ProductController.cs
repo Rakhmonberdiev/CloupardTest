@@ -51,7 +51,7 @@ namespace WEB.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            return BadRequest();
+            return PartialView("_Edit",model);
         }
         [HttpPost]
         public async Task<IActionResult> Delete(Guid Id)
